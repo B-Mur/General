@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+import os
+import multiprocessing
+##################################################################################
+#
+# filePath : file path to the images that need to be processed
+# fileName : name of the file in that filePath
+# savePath : file to save the image to
+# INTERPOLATION : method of interpolation
+#
+##################################################################################
+
+def funcReduceImage(filePath, fileName, savePath, INTERPOLATION=cv2.INTER_LINEAR):
+        img = cv2.imread(filePath+fileName)
+        print(filePath+fileName)
+        x = int(img.shape[1]/20)
+        y = int(img.shape[0]/20)
+        img2 = cv2.resize(img, (x, y), interpolation=INTERPOLATION)
+        imgName = savePath + "filename_" + fileName + ".png"
+        placeholder = np.zeros([299, 299, 3])
+        placeholder[0:y, 0:x, :] = img2
+        cv2.imwrite(imgName, placeholder)
